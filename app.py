@@ -7,8 +7,8 @@ import requests
 app = Flask(__name__)
 
 # Google Programmable Search Engine credentials
-GOOGLE_API_KEY = "AIzaSyALS0aDRLLoY37oYdCTtTwRSlPfUSdsvxg"
-CX = "b160551c2e0194012"
+GOOGLE_API_KEY = "your API key"
+CX = "Your Key"
 
 def get_espn_id(player_name):
     query = f"site:espncricinfo.com/cricketers {player_name}"
