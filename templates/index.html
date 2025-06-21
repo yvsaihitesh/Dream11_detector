@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Best 11 Cricketers</title>
+</head>
+<body>
+    <h1>Enter Cricketer Names (one per line, with type BAT/BOW/ALL):</h1>
+    <form id="playerForm" method="post">
+        <textarea id="names" name="names" rows="10" cols="50" placeholder="Virat Kohli,BAT\nJasprit Bumrah,BOW\nHardik Pandya,ALL"></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="result" style="margin-top: 20px;"></div>
+
+    <script>
+    document.getElementById("playerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/submit', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("result").innerHTML =
+                data.best11 ? `<pre>${data.best11}</pre>` : `Error: ${data.error}`;
+        })
+        .catch(err => {
+            document.getElementById("result").innerText = "❌ An error occurred.";
+            console.error(err);
+        });
+    });
+    </script>
+</body>
+</html>
