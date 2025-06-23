@@ -1,36 +1,261 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Best 11 Cricketers</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DreamTeam XI - The Ultimate IPL Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --accent: #ffe600;
+      --success: #00ffaa;
+      --danger: #ff4d4d;
+      --dark: #121212;
+      --light: #1f1f1f;
+      --highlight: #e74c3c;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, var(--dark), var(--light));
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    .header {
+      text-align: center;
+      background: linear-gradient(90deg, #FF7E5F, #FEB47B);
+      padding: 30px 20px;
+      font-size: 2.8rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background: url('https://images.unsplash.com/photo-1628189682890-a3528e5781a5?auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 0;
+    }
+
+    .hero h2, .hero p {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      background: #2c2c2c;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      resize: vertical;
+      margin-bottom: 20px;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(to right, #ffcc00, #e74c3c);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+      transform: scale(1.02);
+    }
+
+    #result, #stats {
+      margin-top: 30px;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #1a1a1a;
+    }
+
+    .result-table th, .result-table td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .result-table th {
+      background-color: #222;
+      color: var(--accent);
+    }
+
+    .result-table td {
+      color: #eee;
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .success-message {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    #stats {
+      display: none;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      background: #0f0f0f;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Enter Cricketer Names (one per line, with type BAT/BOW/ALL):</h1>
-    <form id="playerForm" method="post">
-        <textarea id="names" name="names" rows="10" cols="50" placeholder="Virat Kohli,BAT\nJasprit Bumrah,BOW\nHardik Pandya,ALL"></textarea><br><br>
-        <input type="submit" value="Submit">
+
+  <div class="header">
+    <i class="fas fa-trophy"></i> DreamTeam XI <i class="fas fa-cricket-ball"></i>
+  </div>
+
+  <div class="hero">
+    <h2>Unleash Your Inner Selector!</h2>
+    <p>Craft the perfect IPL XI with the power of AI</p>
+  </div>
+
+  <div class="container">
+    <form id="playerForm">
+      <label for="names">Enter player names and roles (e.g. Virat Kohli,BAT):</label>
+      <textarea id="names" name="names" placeholder="Virat Kohli,BAT&#10;MS Dhoni,WK&#10;Hardik Pandya,ALL"></textarea>
+      <button type="submit"><i class="fas fa-rocket"></i> Generate Best 11</button>
     </form>
 
-    <div id="result" style="margin-top: 20px;"></div>
+    <div id="result"></div>
+    <button id="showStatsBtn" style="display: none;"><i class="fas fa-chart-line"></i> Show Stats</button>
+    <div id="stats"></div>
+  </div>
 
-    <script>
-    document.getElementById("playerForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
+  <div class="footer">
+    Built with ❤️ for IPL fans | Powered by Next-Gen AI
+  </div>
 
-        fetch('/submit', {
-            method: 'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("result").innerHTML =
-                data.best11 ? `<pre>${data.best11}</pre>` : `Error: ${data.error}`;
-        })
-        .catch(err => {
-            document.getElementById("result").innerText = "❌ An error occurred.";
-            console.error(err);
+  <script>
+    document.getElementById("playerForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const resultDiv = document.getElementById("result");
+      const statsDiv = document.getElementById("stats");
+      const showStatsBtn = document.getElementById("showStatsBtn");
+
+      resultDiv.innerHTML = '<div style="color: var(--accent); text-align:center;"><i class="fas fa-spinner fa-spin"></i> Generating...</div>';
+      statsDiv.style.display = "none";
+      showStatsBtn.style.display = "none";
+      statsDiv.innerHTML = "";
+
+      const formData = new FormData(this);
+      try {
+        const response = await fetch('/submit', {
+          method: 'POST',
+          body: formData
         });
+
+        const data = await response.json();
+        const lines = data.best11.split('\n');
+
+        let best11Table = '';
+        let statsTable = '';
+        let inStatsSection = false;
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+
+          if (trimmed.includes("Best 11")) {
+            best11Table += `<h3 style="color: var(--success); margin-bottom: 10px;"><i class="fas fa-star"></i> ${trimmed}</h3>`;
+            best11Table += `<table class="result-table"><thead><tr><th>Player</th><th>Team</th><th>Role</th></tr></thead><tbody>`;
+          } else if (/^\w+(\s+\w+)*\s+\w+\s+(C|VC|NA)$/i.test(trimmed)) {
+            const [name, team, role] = trimmed.split(/\s+/);
+            best11Table += `<tr><td>${name}</td><td>${team}</td><td>${role}</td></tr>`;
+          } else if (trimmed.match(/^4s\s+6s/i)) {
+            inStatsSection = true;
+            statsTable += `<h3 style="color: var(--accent); margin-top: 20px;">📊 Player Stats</h3>`;
+            statsTable += `<table class="result-table"><thead><tr>`;
+            trimmed.split(/\s+/).forEach(h => {
+              statsTable += `<th>${h}</th>`;
+            });
+            statsTable += `</tr></thead><tbody>`;
+          } else if (inStatsSection && trimmed) {
+            statsTable += `<tr>`;
+            trimmed.split(/\s+/).forEach(cell => {
+              statsTable += `<td>${cell}</td>`;
+            });
+            statsTable += `</tr>`;
+          } else if (trimmed.startsWith("⚠️") || trimmed.startsWith("❌")) {
+            best11Table += `<div class="error-message">${trimmed}</div>`;
+          } else if (trimmed.startsWith("✅")) {
+            best11Table += `<div class="success-message">${trimmed}</div>`;
+          }
+        }
+
+        best11Table += `</tbody></table>`;
+        statsTable += `</tbody></table>`;
+
+        resultDiv.innerHTML = best11Table;
+        statsDiv.innerHTML = statsTable;
+        showStatsBtn.style.display = statsTable.includes("<table") ? "inline-block" : "none";
+
+      } catch (err) {
+        resultDiv.innerHTML = `<div class="error-message"><i class="fas fa-times-circle"></i> Error: ${err.message}</div>`;
+      }
     });
-    </script>
+
+    document.getElementById("showStatsBtn").addEventListener("click", () => {
+      const statsDiv = document.getElementById("stats");
+      statsDiv.style.display = statsDiv.style.display === "none" ? "block" : "none";
+    });
+  </script>
 </body>
 </html>
