@@ -1,7 +1,7 @@
 
 # Dream11 Predictor 🏏🤖
 
-A machine learning project to predict optimal Fantasy XI player combinations for Dream11 or similar fantasy cricket platforms, using past match data, player stats, and smart algorithms.
+A machine learning project to predict Fantasy XI player combinations for Dream11 or similar fantasy cricket platforms, using past match data, player stats, and smart algorithms.
 
 ---
 
@@ -42,10 +42,11 @@ Dream11_predictor/
    ```bash
    pip install -r requirements.txt
    ```
+3. Replace your API key in app.py with your google API key.
 
-3. Run prediction:
+4. Run prediction:
    ```bash
-   python main.py
+   python app.py
    ```
 
 OR run the Jupyter Notebooks inside `/notebooks` for step-by-step exploration.
@@ -59,26 +60,24 @@ OR run the Jupyter Notebooks inside `/notebooks` for step-by-step exploration.
 - NumPy
 - scikit-learn
 - Jupyter
-- (any others used in your project)
+- Papermill
 
 ---
 
 ## 🧠 Future Improvements
 
-- Add web UI to upload upcoming match info
-- Live data scraping from Cricbuzz/ESPNcricinfo
-- Integrate player form & weather impact
-- Generate multiple team suggestions
+- Live data scraping from Cricbuzz/ESPNcricinfo for toss and ground.
+- Integrate player form & weather impact.
+- Generate multiple team suggestions.
 
 ---
 
 ## 🧑‍💻 Author
 
-**Venkata Sai Hitesh Yacha**  
-📧 [your-email@example.com]
+**Yacha Venkata Sai Hitesh**  
+📧 [yvsaihitesh4@gmail.com]
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License.
+## Live Demo
+coming soon....
